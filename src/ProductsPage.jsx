@@ -1,27 +1,25 @@
+import axios from 'axios';
+import { useEffect, useState } from "react";
 import { ProductsIndex } from "./ProductsIndex";
 import { ProductsNew } from "./ProductsNew";
 
 export function ProductsPage() {
-  let products = [
-    {
-      id: 1,
-      name: "Banana",
-      description: "yellow and green",
-      price: "10.99",
-      image_url: "https://images.everydayhealth.com/images/diet-nutrition/how-many-calories-are-in-a-banana-1440x810.jpg" 
-    },
-    {
-      id: 2, 
-      name: "Apple", 
-      description: "red and green", 
-      price: "1", 
-      image_url: "https://www.applesfromny.com/wp-content/uploads/2020/05/20Ounce_NYAS-Apples2.png"
-    }
-  ]
+  const [products, setProducts] = useState([]);
+  const handleIndex = () => {
+    console.log('hello');
+    axios.get("http://localhost:3000/products.json").then((response) => {
+      console.log(response.data);
+      setProducts(response.data)
+    })
+  }
+
+  useEffect(handleIndex, [])
+
   return (
     <main>
       <ProductsNew />
       <ProductsIndex products={products}/>
+      {/* <button onClick={handleIndex}>get the products</button> */}
     </main>
   );
 }
